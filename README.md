@@ -46,9 +46,8 @@ They are only evaluated when you call them like a function, at which point a val
 So you will never encounter a `KeyError` when building the path, only when resolving without a fallback value.
 
 # Installation
-I mean idefk man ur putting me on the spot here, this is really new to me as well...
-I guess I'll try to get it up on pypi? That'd be pretty epic. `pip install kagaconf`
-and it's just a library I wrote, can you IMAGINE?
+You can install this library via `pip install kagaconf`. That is a sentence I never thought
+I could write, but here we are.
 
 # License
 If you find this, think the API looks sweet and wanna use it, go ahead.

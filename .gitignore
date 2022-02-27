@@ -1,4 +1,5 @@
 /venv/
 /build
 /dist
+/.idea
 /kagaconf.egg-info
