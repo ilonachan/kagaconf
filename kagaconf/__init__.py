@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 __author__ = "ilonachan"
 
 import yaml
@@ -196,7 +196,8 @@ def from_path(path: str, filter: str = None, type: str = None,
             else:
                 prefix += f'.{filename}'
         from_file(path, type=type, prefix=prefix)
-    if os.path.isdir(path):
+    if os.path.isdir(path) and (begin_prefix is False or
+                                recursive is True or (isinstance(recursive, int) and recursive > 0)):
         log.info(f'Reading from directory {path}')
         if begin_prefix and dir_prefix:
             dirname = os.path.split(path)[-1]
@@ -206,11 +207,8 @@ def from_path(path: str, filter: str = None, type: str = None,
                 prefix += f'.{dirname}'
         for f in os.listdir(path):
             p = os.path.join(path, f)
-            if filter and not re.match(filter, p):
+            if filter and not re.match(filter, f):
                 continue
 
-            if recursive is True or (isinstance(recursive, int) and recursive > 0):
-                if isinstance(recursive, int):
-                    recursive -= 1
-                from_path(p, filter=filter, type=type, recursive=recursive, prefix=prefix, dir_prefix=dir_prefix,
-                          file_prefix=file_prefix, begin_prefix=True)
+            from_path(p, filter=filter, type=type, recursive=recursive - 1 if isinstance(recursive, int) else recursive,
+                      prefix=prefix, dir_prefix=dir_prefix, file_prefix=file_prefix, begin_prefix=True)

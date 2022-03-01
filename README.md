@@ -9,7 +9,8 @@ Adding items to this dictionary is easy:
 ```python
 import kagaconf
 
-# The simplest way to fill the dict is by copying another dict. I recommend this for default values.
+# The simplest way to fill the dict is by copying another dict.
+# I recommend this for default values.
 kagaconf.from_dict({"key": "value"})
 
 # Filling configuration from a file or all files in a directory is also very easy.
@@ -20,25 +21,29 @@ kagaconf.from_path('./path/to/your/config/directory', filter=r'[^_].*\.yaml', re
 
 # Lastly you can use a list of named variables to fill a skeleton dict with data.
 # I imagine this will mainly be used to import environment variables into the config,
-# which is why os.environ is the default data source (but you can obviously specify your own).
+# that's why os.environ is the default data source (but you can obviously specify your own).
 kagaconf.from_env_mapping({"this_key_will_be_filled": "BY_THIS_ENV_VARIABLE"})
 
-# Found values are applied in order, so default values should go first and values with high precedence last.
+# Found values are applied in order, so default values should go first
+# and values with high precedence (e.g. environment overrides) last.
 ```
 
 Once the configuration dict is prepared, it can easily be accessed from anywhere:
 ```python
 from kagaconf import cfg
 
-# Use normal python dot syntax to get to the key you want. Call it like a function to get the value behind it.
+# Use normal python dot syntax to get to the key you want.
+# Call it like a function to get the value behind it.
 cfg.hello()
 
-# This will throw an error if the key has no value, unless you provide a default value
-# If no default was provided here, resolution would stop at "nonexistent" and throw a KeyError.
+# This will throw a KeyError if the key has no value, unless you provide a default value.
+# If no default was provided here, resolution would stop at "nonexistent".
 cfg.nonexistent.key("this is fine")
 
-# You can also use dict syntax to get subsequent elements. This can be freely mixed with the dot syntax.
-cfg["this is cool"].and_even_required_for_using_number_indices[1234].but_also.you_can_do["something.like.this"]()
+# You can also use dict syntax to get subsequent elements.
+# This can be freely mixed with the dot syntax.
+cfg["this is cool"].and_even_required_for_using_number_indices[1234]\
+    .but_also.you_can_do["something.like.this"]()
 ```
 
 The paths you build are stored as `PathChainer` objects and can be completely arbitrary in structure.
