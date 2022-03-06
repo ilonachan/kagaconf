@@ -1,4 +1,4 @@
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "ilonachan"
 
 import yaml
@@ -62,6 +62,9 @@ class PathChainer:
             if len(args) > 0:
                 return args[0]
             raise
+
+    def __format__(self, format_spec):
+        return format(self(format_spec))
 
     def exists(self):
         try:
